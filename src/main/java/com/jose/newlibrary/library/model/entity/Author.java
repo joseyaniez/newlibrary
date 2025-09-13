@@ -46,7 +46,8 @@ public class Author {
     @JoinColumn(name = "nationality_id", nullable = false)
     private Nationality nationality;
 
-    @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    // Debido a que la lista es muy grande, no se tendrá este campo
+    //@OneToMany(mappedBy = "author")
+    //private List<Book> books;
     
 }

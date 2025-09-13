@@ -34,7 +34,8 @@ public class Nationality {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "nationality", fetch = FetchType.LAZY)
+    // Se va a suponer que la lista es pequeña, por tanto sí se puede incluir este campo
+    @OneToMany(mappedBy = "nationality", fetch = FetchType.EAGER)
     private List<Author> authors;
     
 }
