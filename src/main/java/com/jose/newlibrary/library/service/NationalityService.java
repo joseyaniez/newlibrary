@@ -11,5 +11,5 @@ public interface NationalityService {
     NationalityResponse createNationality(NationalityRequest nationalityRequest);
     NationalityResponse getNationality(Long id);
     NationalityResponse updateNationality(Long id, NationalityRequest nationalityRequest);
-    Boolean deleteNationality(Long id);
+    void deleteNationality(Long id);
 }

@@ -56,14 +56,23 @@ public class NationalityServiceImpl implements NationalityService {
 
 	@Override
 	public NationalityResponse updateNationality(Long id, NationalityRequest nationalityRequest) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateNationality'");
+        Nationality existing = nationalityRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("La nacionalidad con id " + id + " no existe"));
+        existing.setName(nationalityRequest.name());
+        Nationality nat = nationalityRepository.save(existing);
+        return new NationalityResponse(
+            nat.getId(),
+            nat.getName(),
+            nat.getAuthors()
+        );
 	}
 
 	@Override
-	public Boolean deleteNationality(Long id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteNationality'");
+	public void deleteNationality(Long id) {
+        if(!nationalityRepository.existsById(id)){
+            throw new ResourceNotFoundException("La nacionalidad con id " + id + " no existe");
+        }
+        nationalityRepository.deleteById(id);
 	}
 
     
