@@ -26,7 +26,7 @@ public class NationalityServiceImpl implements NationalityService {
 
 	@Override
 	public NationalityResponse createNationality(NationalityRequest nationalityRequest) {
-        if(!nationalityRepository.existsByNameIgnoreCase(nationalityRequest.name())){
+        if(nationalityRepository.existsByNameIgnoreCase(nationalityRequest.name())){
             throw new IllegalArgumentException("El nombre de nacionalidad ya existe");
         }
         Nationality nationality = new Nationality();
