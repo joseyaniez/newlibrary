@@ -40,7 +40,7 @@ public class Author {
     private LocalDate birthdate;
 
     @Column(nullable = true)
-    private LocalDate death;
+    private LocalDate deathdate;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "nationality_id", nullable = false)
