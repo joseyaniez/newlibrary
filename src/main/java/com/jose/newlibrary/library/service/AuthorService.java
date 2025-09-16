@@ -10,6 +10,7 @@ import com.jose.newlibrary.library.model.dto.response.AuthorResponse;
 public interface AuthorService {
     AuthorResponse createAuthor(AuthorRequest authorRequest);
     AuthorResponse getAuthor(Long id);
+    AuthorResponse getAuthorByName(String name);
     AuthorResponse updateAuthor(Long id, AuthorRequest authorRequest);
     void deleteAuthor(Long id);
 }

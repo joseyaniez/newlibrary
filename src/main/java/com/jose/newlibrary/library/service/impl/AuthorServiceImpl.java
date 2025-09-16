@@ -66,6 +66,19 @@ public class AuthorServiceImpl implements AuthorService {
 	}
 
 	@Override
+	public AuthorResponse getAuthorByName(String name) {
+        Author author = authorRepository.findByNameIgnoreCase(name)
+            .orElseThrow(() -> new ResourceNotFoundException("El author con nombre " + name + " no existe"));
+        return new AuthorResponse(
+            author.getId(),
+            author.getName(),
+            author.getBirthdate(),
+            author.getDeathdate(),
+            author.getNationality().getName()
+        );
+	}
+
+	@Override
 	public AuthorResponse updateAuthor(Long id, AuthorRequest authorRequest) {
         Author author = authorRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("El author con id " + id + " no existe"));
