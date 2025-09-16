@@ -3,6 +3,9 @@ package com.jose.newlibrary.library.model.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.jose.newlibrary.library.repository.NationalityRepository;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,7 +38,12 @@ public class Nationality {
     private String name;
 
     // Se va a suponer que la lista es pequeña, por tanto sí se puede incluir este campo
+    @JsonManagedReference
     @OneToMany(mappedBy = "nationality", fetch = FetchType.EAGER)
     private List<Author> authors;
+
+    public Nationality(String name){
+        this.name = name;
+    }
     
 }

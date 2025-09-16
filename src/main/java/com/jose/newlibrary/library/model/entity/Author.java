@@ -4,6 +4,8 @@ package com.jose.newlibrary.library.model.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,6 +44,7 @@ public class Author {
     @Column(nullable = true)
     private LocalDate deathdate;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "nationality_id", nullable = false)
     private Nationality nationality;
