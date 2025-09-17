@@ -3,6 +3,9 @@ package com.jose.newlibrary.library.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.jose.newlibrary.library.model.dto.request.BookRequest;
 import com.jose.newlibrary.library.model.dto.response.BookResponse;
 
@@ -14,7 +17,7 @@ public interface BookService {
     BookResponse getBookById(Long id);
     List<BookResponse> getBookByTitle(String title);
     List<BookResponse> getBooksByAuthor(Long authorId);
-    List<BookResponse> getAllBooks();
+    Page<BookResponse> getAllBooks(Pageable pageable);
     BookResponse updateBook(Long id, BookRequest bookRequest);
     void deleteBook(Long id);
 }

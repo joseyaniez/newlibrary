@@ -4,6 +4,10 @@ package com.jose.newlibrary.library.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +60,27 @@ public class BookController {
     public ResponseEntity<List<BookResponse>> getBooksByTitle(@RequestParam String title){
         List<BookResponse> books = bookService.getBookByTitle(title);
         return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<List<BookResponse>> getBooksByAuthorId(@PathVariable Long authorId){
+        List<BookResponse> books = bookService.getBooksByAuthor(authorId);
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping
+    public Page<BookResponse> getAllBooks(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "id") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDir
+    ){
+        Sort sort = sortDir.equalsIgnoreCase("asc")
+            ? Sort.by(sortBy).ascending()
+            : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return bookService.getAllBooks(pageable);
     }
 
 }

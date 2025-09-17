@@ -3,6 +3,8 @@ package com.jose.newlibrary.library.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jose.newlibrary.core.exception.exceptions.ResourceNotFoundException;
@@ -73,14 +75,20 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookResponse> getBooksByAuthor(Long authorId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getBooksByAuthor'");
+        if(!authorRepository.existsById(authorId)){
+            throw new ResourceNotFoundException("El autor con id " + authorId + " no existe");
+        }
+        List<Book> books = bookRepository.findByAuthorId(authorId);
+        return books.stream()
+            .map( book -> new BookResponse(book.getId(), book.getTitle(), book.getPublicationDate(), null))
+            .toList();
 	}
 
 	@Override
-	public List<BookResponse> getAllBooks() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAllBooks'");
+	public Page<BookResponse> getAllBooks(Pageable pageable) {
+        return bookRepository
+            .findAll(pageable)
+            .map(book -> new BookResponse(book.getId(), book.getTitle(), book.getPublicationDate(), book.getAuthor().getName()));
 	}
 
 	@Override

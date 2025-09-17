@@ -40,4 +40,10 @@ public class Book {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
+    public Book(String title, LocalDate publicationDate, Author author){
+        this.title = title;
+        this.publicationDate = publicationDate;
+        this.author = author;
+    }
+
 }
