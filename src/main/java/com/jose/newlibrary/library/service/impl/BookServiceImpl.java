@@ -3,6 +3,8 @@ package com.jose.newlibrary.library.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.jose.newlibrary.library.model.dto.request.BookRequest;
 import com.jose.newlibrary.library.model.dto.response.BookResponse;
 import com.jose.newlibrary.library.model.entity.Author;
@@ -14,6 +16,7 @@ import com.jose.newlibrary.library.service.BookService;
 /**
  * BookServiceImpl
  */
+@Service
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;

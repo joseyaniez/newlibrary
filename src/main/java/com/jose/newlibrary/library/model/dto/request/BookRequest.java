@@ -15,7 +15,6 @@ import jakarta.validation.constraints.Pattern;
 /**
  * BookRequest
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public record BookRequest(
     @NotBlank
     @Pattern(
