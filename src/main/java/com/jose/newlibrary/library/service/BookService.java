@@ -12,7 +12,7 @@ import com.jose.newlibrary.library.model.dto.response.BookResponse;
 public interface BookService {
     BookResponse createBook(BookRequest bookRequest);
     BookResponse getBookById(Long id);
-    List<BookResponse> getBookByName(String name);
+    List<BookResponse> getBookByTitle(String title);
     List<BookResponse> getBooksByAuthor(Long authorId);
     List<BookResponse> getAllBooks();
     BookResponse updateBook(Long id, BookRequest bookRequest);

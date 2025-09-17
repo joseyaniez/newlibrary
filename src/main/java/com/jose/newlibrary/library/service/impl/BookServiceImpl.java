@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.jose.newlibrary.core.exception.exceptions.ResourceNotFoundException;
 import com.jose.newlibrary.library.model.dto.request.BookRequest;
 import com.jose.newlibrary.library.model.dto.response.BookResponse;
 import com.jose.newlibrary.library.model.entity.Author;
@@ -49,14 +50,25 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookResponse getBookById(Long id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getBookById'");
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No se encontró el libro con id = " + id));
+        return new BookResponse(
+            book.getId(),
+            book.getTitle(),
+            book.getPublicationDate(),
+            book.getAuthor().getName()
+        );
 	}
 
 	@Override
-	public List<BookResponse> getBookByName(String name) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getBookByName'");
+	public List<BookResponse> getBookByTitle(String title) {
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        return books.stream().map(book -> new BookResponse(
+            book.getId(),
+            book.getTitle(),
+            book.getPublicationDate(),
+            book.getAuthor().getName()
+        )).toList();
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -30,6 +31,19 @@ public class AppExceptionHandler {
             body.put(error.getField(), error.getDefaultMessage())
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleMissingParams(MissingServletRequestParameterException ex) {
+        String paramName = ex.getParameterName();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            new ErrorResponse(
+                "query_missing",
+                "El parámetro '" + paramName + "' es requerido.",
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+            )
+        );
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
