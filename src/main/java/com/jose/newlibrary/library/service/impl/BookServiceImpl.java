@@ -93,14 +93,31 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookResponse updateBook(Long id, BookRequest bookRequest) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateBook'");
+        Author author = authorRepository.findById(bookRequest.authorId())
+            .orElseThrow(() -> new IllegalArgumentException("No existe un author con id = " + bookRequest.authorId()));
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No se encontró el libro con id = " + id));
+        book.setTitle(bookRequest.title());
+        book.setAuthor(author);
+        if(bookRequest.publicationDate() != null){
+            book.setPublicationDate(bookRequest.publicationDate());
+        }
+        bookRepository.save(book);
+        return new BookResponse(
+            book.getId(),
+            book.getTitle(),
+            book.getPublicationDate(),
+            book.getAuthor().getName()
+        );
+
 	}
 
 	@Override
 	public void deleteBook(Long id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteBook'");
+        if(!bookRepository.existsById(id)){
+            throw new ResourceNotFoundException("No existe un libro con id = " + id);
+        }
+        bookRepository.deleteById(id);
 	}
 
     
