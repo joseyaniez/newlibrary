@@ -12,6 +12,7 @@ import com.jose.newlibrary.auth.model.dto.ProfileRequest;
 import com.jose.newlibrary.auth.model.dto.ProfileResponse;
 import com.jose.newlibrary.auth.service.ProfileService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -26,7 +27,7 @@ public class ProfileController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProfileResponse register(@RequestBody ProfileRequest request){
+    public ProfileResponse register(@Valid @RequestBody ProfileRequest request){
         ProfileResponse response = profileService.createProfile(request);
         return response;
     }
