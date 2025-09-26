@@ -82,10 +82,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager() throws Exception {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(appUserDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(authenticationProvider);
+
         // Existe otra forma más automática usando el argumento AuthenticationConfiguration el cual permite
         // usar un DaoProvider y tomar el passwordEncoder y el DetailService definido
     }
