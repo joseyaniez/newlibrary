@@ -71,7 +71,7 @@ public class AuthController {
         } catch(Exception ex){
             Map<String, Object> error = new HashMap<>();
             error.put("error", true);
-            error.put("message", "No se pudo authenticar");
+            error.put("message", ex.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
     }

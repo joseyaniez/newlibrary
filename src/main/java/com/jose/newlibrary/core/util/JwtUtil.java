@@ -22,7 +22,8 @@ public class JwtUtil {
 
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+
+    //private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -30,6 +31,7 @@ public class JwtUtil {
     }
 
 	private String createToken(Map<String, Object> claims, String email) {
+        final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
         return Jwts.builder()
             .setClaims(claims)
             .setSubject(email)
